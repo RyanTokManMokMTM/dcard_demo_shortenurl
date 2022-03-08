@@ -1,0 +1,17 @@
+Server:
+  Host: localhost
+  Port: 8000
+  ReadTimeOut: 10
+  WriteTimeOut: 10
+
+Database:
+  DBType: mysql
+  User: root
+  Password: admin
+  Host: 127.0.0.1:3306
+  DBName: dcard_service
+  Table_Prefix: dcard_
+  Charset: utf8
+  ParseTime: True
+  MaxIdleConns: 10
+  MaxOpenConns: 30
