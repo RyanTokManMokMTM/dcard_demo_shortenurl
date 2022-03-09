@@ -37,6 +37,7 @@ func main() {
 	}
 
 	log.Fatalln(server.ListenAndServe())
+
 }
 
 func setUpSetting() error {
@@ -51,7 +52,7 @@ func setUpSetting() error {
 		return err
 	}
 
-	if err = set.ReadSection("db", &global.DBSetting); err != nil {
+	if err = set.ReadSection("Database", &global.DBSetting); err != nil {
 		return err
 	}
 

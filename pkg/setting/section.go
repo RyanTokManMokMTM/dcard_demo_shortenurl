@@ -11,7 +11,6 @@ type (
 	}
 
 	DB struct {
-		DBType       string
 		User         string
 		Password     string
 		Host         string

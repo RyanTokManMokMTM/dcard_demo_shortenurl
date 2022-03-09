@@ -10,15 +10,16 @@ import (
 
 //Model Sharing model property
 type Model struct {
-	ID        uint32 `json:"id" gorm:"primary_key"`
-	CreateOn  uint32 `json:"create_on"`
-	DeleteOn  uint32 `json:"delete_on"`
-	IsExpired int8   `json:"is_expired"`
+	ID uint32 `json:"id" gorm:"primary_key"`
+	//CreateOn  uint32 `json:"create_on"`
+	//DeleteOn  uint32 `json:"delete_on"`
+	//IsExpired int8 `json:"is_expired"`
 }
 
 //NewEngine init the engine
 func NewEngine(dbSetting *setting.DB) (*gorm.DB, error) {
-	set := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=%t?&loc=Local",
+
+	set := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=%t&loc=Local",
 		dbSetting.User,
 		dbSetting.Password,
 		dbSetting.Host,
@@ -36,10 +37,22 @@ func NewEngine(dbSetting *setting.DB) (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+	err = migration(db)
+	if err != nil {
+		return nil, err
+	}
 
 	sql.SetMaxOpenConns(dbSetting.MaxOpenConns)
 	sql.SetMaxIdleConns(dbSetting.MaxIdleConns)
 	return db, nil
+}
+
+func migration(db *gorm.DB) error {
+	err := db.AutoMigrate(&UploadModel{})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func Close() {
