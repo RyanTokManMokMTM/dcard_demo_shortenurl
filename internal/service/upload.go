@@ -1,28 +1,42 @@
 package service
 
-import "time"
+import (
+	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/pkg/util"
+	"time"
+)
 
 type UrlUploadReq struct {
 	//URL
-	Url string `form:"url" binding:"required,url"`
+	URL string `form:"url" binding:"required,url"`
 	//Expired time
-	ExpiredTime time.Duration `form:"expired_time" binding:"required"`
+	ExpiredTime time.Time `form:"expired_time" binding:"required,gt"`
 }
 
 type ShortenURLInfo struct {
 	ShortenURL string
 	LongestURL string
-	ExpiredAty time.Duration
+	ExpiredAt  time.Time
 }
 
 func (serve *Service) CreateShortenUrl(param *UrlUploadReq) (*ShortenURLInfo, error) {
 	//calling dao
 	//process the upload service
-	_, err := serve.dao.UploadURL(param)
+	model, err := serve.dao.UploadURL(param.URL, param.ExpiredTime)
 	if err != nil {
 		return nil, err
 	}
 
 	//generate the shortenURL by base62 base on time or id
-	return nil, nil
+	unixTime := time.Now().Unix()
+	shortenStr := util.Base62URL(unixTime)
+
+	err = serve.dao.UpdateShortenURL(model.ID, model.OriginalURL, shortenStr)
+	if err != nil {
+		return nil, err
+	}
+	return &ShortenURLInfo{
+		ShortenURL: shortenStr,
+		LongestURL: model.OriginalURL,
+		ExpiredAt:  model.ExpiredAt,
+	}, err
 }

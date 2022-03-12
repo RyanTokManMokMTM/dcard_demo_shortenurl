@@ -23,21 +23,23 @@ func init() {
 }
 
 func main() {
-	engine := gin.New()
-	router.NewRouter(engine)
-
 	//Create a http server
 	server := http.Server{
 		//http server setting
 		Addr:           fmt.Sprintf("%s:%s", global.ServerSetting.Host, global.ServerSetting.Port), //server host
-		Handler:        engine,                                                                     //engine included http interface ServeHTTP
+		Handler:        setUpServer(),                                                              //engine included http interface ServeHTTP
 		ReadTimeout:    global.ServerSetting.ReadTimeOut,
 		WriteTimeout:   global.ServerSetting.WriteTimeOut,
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	log.Fatalln(server.ListenAndServe())
+	log.Fatal(server.ListenAndServe())
+}
 
+func setUpServer() *gin.Engine {
+	engine := gin.New()
+	router.NewRouter(engine)
+	return engine
 }
 
 func setUpSetting() error {
@@ -65,6 +67,7 @@ func setUpDatabase() error {
 	var err error
 	//set global database instance
 	global.DB, err = model.NewEngine(global.DBSetting)
+
 	if err != nil {
 		return err
 	}

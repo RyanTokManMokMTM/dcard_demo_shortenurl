@@ -7,24 +7,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RedirectURL(ctx *gin.Context) {
+func UploadController(ctx *gin.Context) {
 	//TODO - Get Longest URL by url id if id is existed
 	res := app.NewResponse(ctx)
 	param := service.UrlUploadReq{}
 	valid, errs := app.BindingAndValidating(ctx, &param)
-	if valid {
+	if !valid {
 		res.ErrorResponse(errCode.InvalidParams.WithDetail(errs.Error()))
 		return
 	}
 
-	//service
 	serve := service.NewService(ctx)
-	err := serve.CreateShortenUrl(&param)
+	data, err := serve.CreateShortenUrl(&param)
 	if err != nil {
 		res.ErrorResponse(errCode.ErrorCreateShortenURL.WithDetail(err.Error()))
 		return
 	}
 
-	res.SuccessResponse(param)
+	res.SuccessResponse(data)
 	return
 }

@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/pkg/app"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
@@ -25,6 +26,13 @@ func ValidateTranslator() gin.HandlerFunc {
 		//getting  validator
 		v, ok := binding.Validator.Engine().(*validator.Validate)
 		if ok {
+			//v.RegisterTranslation("expired", trans, func(ut uni.Translator) error {
+			//	return ut.Add("expired", "{0}必需大於當前時間", false)
+			//}, func(ut uni.Translator, fe validator.FieldError) string {
+			//	t, _ := ut.T("expired", fe.Field())
+			//	return t
+			//})
+
 			switch local {
 			case "zh":
 				_ = zhTran.RegisterDefaultTranslations(v, trans)
@@ -32,10 +40,21 @@ func ValidateTranslator() gin.HandlerFunc {
 				_ = enTran.RegisterDefaultTranslations(v, trans)
 			default:
 				//default using chinese translator
-				_ = zhTran.RegisterDefaultTranslations(v, trans)
+				_ = enTran.RegisterDefaultTranslations(v, trans)
 			}
 			ctx.Set("trans", trans)
+
 		}
 		ctx.Next()
+	}
+}
+
+func ValidateCustomFields() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		v, ok := binding.Validator.Engine().(*validator.Validate)
+		if ok {
+			//our expired function
+			_ = v.RegisterValidation("expired", app.TimeValidation)
+		}
 	}
 }

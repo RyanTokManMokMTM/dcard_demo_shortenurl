@@ -1,7 +1,9 @@
 package model
 
 import (
+	"errors"
 	"gorm.io/gorm"
+	"log"
 	"time"
 )
 
@@ -9,7 +11,7 @@ type UploadModel struct {
 	*Model
 	OriginalURL string
 	ShortenURL  string
-	ExpiredAt   time.Duration
+	ExpiredAt   time.Time
 }
 
 func (up UploadModel) GetTableName() string {
@@ -17,23 +19,33 @@ func (up UploadModel) GetTableName() string {
 }
 
 func (up UploadModel) CreateShortenURL(db *gorm.DB) (*UploadModel, error) {
+
 	//whether longestURL is existed
 	//time := time.Now()
 	//check long url is existed and not expired
 	//if the record is existed and expired,just updated the expired date and return the
-	err := db.Model(up).Where("original_url = ?", up.OriginalURL).Error
-	if err != gorm.ErrRecordNotFound {
-		return nil, err
+	var exist int64
+	db.Model(&up).Select("count(*)").Where("original_url = ?", up.OriginalURL).Find(&exist)
+	log.Println(exist)
+	if exist > 0 {
+		return nil, errors.New("original_url is already exist")
 	}
 
-	if err = db.Create(up).Error; err != nil {
+	if err := db.Create(&up).Error; err != nil {
 		return nil, err
 	}
-	return &up, err
+	return &up, nil
 }
 
-func (up UploadModel) UpdateShortenURL(id int64) {}
+func (up UploadModel) UpdateShortenURL(db *gorm.DB, v interface{}) error {
+	err := db.Model(&up).Where("id = ? AND original_url =?", up.ID, up.OriginalURL).Updates(v).Error
+	return err
+}
 
-//func (up*UploadModel) GetURLByUrlID(db *gorm.DB, urlID string) string {
-//	return global.DBSetting.TablePrefix + "shortenURL"
-//}
+func (up UploadModel) GetShortenURLInfo(db *gorm.DB) (*UploadModel, error) {
+	if err := db.Model(&up).Select("original_url").Where("shorten_url = ?", up.ShortenURL).First(&up).Error; err != nil {
+		return nil, err
+	}
+
+	return &up, nil
+}

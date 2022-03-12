@@ -38,3 +38,7 @@ func (res *Response) SuccessResponse(data interface{}) {
 
 	res.ctx.JSON(http.StatusOK, data)
 }
+
+func (res *Response) SuccessAndRedirectPermanently(url string) {
+	res.ctx.Redirect(http.StatusMovedPermanently, url) //move to url permanently
+}

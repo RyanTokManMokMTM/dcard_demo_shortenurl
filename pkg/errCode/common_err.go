@@ -1,15 +1,17 @@
 package errCode
 
+//Shorten URL error code prefix starting with 1000x
 var (
-	Success        = NewError(0, "")
-	ServerError    = NewError(100, "")
-	InvalidParams  = NewError(101, "")
-	NotFound       = NewError(102, "")
-	TooManyRequest = NewError(103, "")
+	Success        = NewError(0, "succeed")
+	ServerError    = NewError(10000, "server internal error")
+	InvalidParams  = NewError(10001, "invalid params")
+	NotFound       = NewError(10002, "not found")
+	TooManyRequest = NewError(10003, "too many request")
 )
 
+//Shorten URL error code prefix starting with 2000x
 var (
-	ErrorCreateShortenURL = NewError(200, "")
-	ErrorGetURL           = NewError(201, "")
-	ErrorUrlCodeExpired   = NewError(202, "")
+	ErrorCreateShortenURL = NewError(20001, "error create shorten url")
+	ErrorGetURL           = NewError(20002, "error get url")
+	ErrorUrlCodeExpired   = NewError(20003, "error url code expired")
 )

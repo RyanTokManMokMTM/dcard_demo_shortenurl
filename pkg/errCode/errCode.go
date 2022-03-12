@@ -56,9 +56,23 @@ func (err *Error) WithDetail(detail ...string) *Error {
 }
 
 func (err *Error) StatusCode() int {
-	//switch err.code {
-	//
-	//}
+	switch err {
+	case Success:
+		return http.StatusOK
+	case ServerError:
+		return http.StatusInternalServerError
+	case InvalidParams:
+		return http.StatusBadRequest
+	case TooManyRequest:
+		return http.StatusTooManyRequests
+	case NotFound:
+		return http.StatusNotFound
+	case ErrorCreateShortenURL:
+		fallthrough
+	case ErrorGetURL:
+		fallthrough
+	case ErrorUrlCodeExpired:
+	}
 
 	return http.StatusInternalServerError
 }
