@@ -7,9 +7,9 @@ import (
 
 type UrlUploadReq struct {
 	//URL
-	URL string `form:"url" binding:"required,url"`
+	URL string `form:"URL" binding:"required,url"`
 	//Expired time
-	ExpiredTime time.Time `form:"expired_time" binding:"required,gt"`
+	ExpiredTime time.Time `form:"ExpiredTime" binding:"required,gt"`
 }
 
 type ShortenURLInfo struct {
@@ -28,12 +28,13 @@ func (serve *Service) CreateShortenUrl(param *UrlUploadReq) (*ShortenURLInfo, er
 
 	//generate the shortenURL by base62 base on time or id
 	unixTime := time.Now().Unix()
-	shortenStr := util.Base62URL(unixTime)
+	shortenStr := util.Base62URL(unixTime + int64(model.ID))
 
 	err = serve.dao.UpdateShortenURL(model.ID, model.OriginalURL, shortenStr)
 	if err != nil {
 		return nil, err
 	}
+
 	return &ShortenURLInfo{
 		ShortenURL: shortenStr,
 		LongestURL: model.OriginalURL,

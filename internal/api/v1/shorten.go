@@ -32,6 +32,7 @@ func GetUrlAndRedirect(ctx *gin.Context) {
 		res.ErrorResponse(errCode.NotFound.WithDetail(err.Error()))
 		return
 	}
+
 	res.SuccessAndRedirectPermanently(originalURL)
 	return
 }

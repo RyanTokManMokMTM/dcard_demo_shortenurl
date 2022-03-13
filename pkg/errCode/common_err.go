@@ -2,11 +2,12 @@ package errCode
 
 //Shorten URL error code prefix starting with 1000x
 var (
-	Success        = NewError(0, "succeed")
-	ServerError    = NewError(10000, "server internal error")
-	InvalidParams  = NewError(10001, "invalid params")
-	NotFound       = NewError(10002, "not found")
-	TooManyRequest = NewError(10003, "too many request")
+	Success             = NewError(0, "succeed")
+	PermanentlyRedirect = NewError(1, "redirect permanently")
+	ServerError         = NewError(10000, "server internal error")
+	InvalidParams       = NewError(10001, "invalid params")
+	NotFound            = NewError(10002, "not found")
+	TooManyRequest      = NewError(10003, "too many request")
 )
 
 //Shorten URL error code prefix starting with 2000x

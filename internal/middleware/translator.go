@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/pkg/app"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
@@ -49,12 +48,12 @@ func ValidateTranslator() gin.HandlerFunc {
 	}
 }
 
-func ValidateCustomFields() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		v, ok := binding.Validator.Engine().(*validator.Validate)
-		if ok {
-			//our expired function
-			_ = v.RegisterValidation("expired", app.TimeValidation)
-		}
-	}
-}
+//func ValidateCustomFields() gin.HandlerFunc {
+//	return func(ctx *gin.Context) {
+//		v, ok := binding.Validator.Engine().(*validator.Validate)
+//		if ok {
+//			//our expired function
+//			_ = v.RegisterValidation("expired", app.TimeValidation)
+//		}
+//	}
+//}

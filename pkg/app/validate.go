@@ -5,7 +5,6 @@ import (
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	"strings"
-	"time"
 )
 
 type ValidateErr struct {
@@ -63,12 +62,13 @@ func BindingAndValidating(ctx *gin.Context, v interface{}) (bool, ValidateErrs) 
 	return true, nil //not any error ,passed
 }
 
-func TimeValidation(fl validator.FieldLevel) bool {
-	now := time.Now().Unix()
-
-	//parse field time to time UTC ,then convert to unix time
-	utcTime := "2006-01-02T03:04:05Z"
-	expired, _ := time.Parse(utcTime, fl.Field().String())
-
-	return expired.Unix() < now
-}
+//
+//func TimeValidation(fl validator.FieldLevel) bool {
+//	now := time.Now().Unix()
+//
+//	//parse field time to time UTC ,then convert to unix time
+//	utcTime := "2006-01-02T03:04:05Z"
+//	expired, _ := time.Parse(utcTime, fl.Field().String())
+//
+//	return expired.Unix() < now
+//}

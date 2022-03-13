@@ -14,3 +14,6 @@ Database:
   ParseTime: true
   MaxIdleConns: 10
   MaxOpenConns: 30
+
+App:
+  NotAllowedAccessTime: 60 # in second

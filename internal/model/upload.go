@@ -43,7 +43,7 @@ func (up UploadModel) UpdateShortenURL(db *gorm.DB, v interface{}) error {
 }
 
 func (up UploadModel) GetShortenURLInfo(db *gorm.DB) (*UploadModel, error) {
-	if err := db.Model(&up).Select("original_url").Where("shorten_url = ?", up.ShortenURL).First(&up).Error; err != nil {
+	if err := db.Model(&up).Where("shorten_url = ?", up.ShortenURL).First(&up).Error; err != nil {
 		return nil, err
 	}
 
