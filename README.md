@@ -4,6 +4,7 @@
 * Mysql database with GORM
 * Validator v10 
 * Viper
+* Swagger-API
 
 ### APIs
 |Uri|Method|Desc|
