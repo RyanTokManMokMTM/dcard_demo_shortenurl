@@ -11,9 +11,9 @@ import (
 //Model Sharing model property
 type Model struct {
 	ID uint32 `json:"id" gorm:"primary_key"`
-	//CreateOn  uint32 `json:"create_on"`
+	//CreateOn  uint32 `json:"create_on" gorm:"NOT NULL"`
 	//DeleteOn  uint32 `json:"delete_on"`
-	//IsExpired int8 `json:"is_expired"`
+	//IsExpired int8 `json:"is_expired" gorm:"NOT NULL"`
 }
 
 //NewEngine init the engine

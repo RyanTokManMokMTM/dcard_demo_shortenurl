@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/global"
 	"time"
 )
 
@@ -14,7 +15,7 @@ func (serve *Service) ShortenInfo(urlId string) (string, error) {
 	//compare with the time
 	//expired time can't less than 1 or n minute ,
 	today := time.Now()
-	if today.Sub(info.ExpiredAt) > time.Second*60 { //suppose to day is 2-13 and expired time is 2-10 -> 3*24*60*60
+	if today.Sub(info.ExpiredAt) > global.AppSetting.NotAllowedAccessTime { //suppose to day is 2-13 and expired time is 2-10 -> 3*24*60*60
 		return "", errors.New("URL Code expired")
 	}
 

@@ -22,6 +22,7 @@ type (
 		MaxOpenConns int
 	}
 
-	//App struct {
-	//}
+	App struct {
+		NotAllowedAccessTime time.Duration
+	}
 )

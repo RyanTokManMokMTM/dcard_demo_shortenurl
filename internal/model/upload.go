@@ -8,9 +8,9 @@ import (
 
 type UploadModel struct {
 	*Model
-	OriginalURL string
+	OriginalURL string `gorm:"not null"`
 	ShortenURL  string
-	ExpiredAt   time.Time
+	ExpiredAt   time.Time `gorm:"not null"`
 }
 
 func (up UploadModel) GetTableName() string {

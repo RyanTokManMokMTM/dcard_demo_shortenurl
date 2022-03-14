@@ -58,6 +58,11 @@ func setUpSetting() error {
 		return err
 	}
 
+	if err = set.ReadSection("App", &global.AppSetting); err != nil {
+		return err
+	}
+
+	global.AppSetting.NotAllowedAccessTime *= time.Second
 	global.ServerSetting.ReadTimeOut *= time.Second
 	global.ServerSetting.WriteTimeOut *= time.Second
 	return nil
