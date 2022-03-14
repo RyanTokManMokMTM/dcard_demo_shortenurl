@@ -8,6 +8,7 @@ type (
 		Port         string
 		ReadTimeOut  time.Duration
 		WriteTimeOut time.Duration
+		Mode         string
 	}
 
 	DB struct {

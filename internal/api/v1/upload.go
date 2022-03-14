@@ -7,6 +7,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Upload longest url with expired time
+// @Tags UploadURL
+// @Version 1.0
+// @Accept application/x-www-form-urlencoded
+// @Produce application/json
+// @Param URL formData string true "original url"
+// @Param ExpiredTime formData string true "UTC time"
+// @Success 200 {object} service.ShortenURLInfo "upload succeed"
+// @Failure 500 {object} errCode.Error "upload failed"
+// @Failure 400 {object} errCode.Error "request parameter invaild"
+// @Router /api/v1/urls [POST]
 func UploadController(ctx *gin.Context) {
 	//TODO - Get Longest URL by url id if id is existed
 	res := app.NewResponse(ctx)

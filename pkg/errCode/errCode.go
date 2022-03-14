@@ -7,23 +7,23 @@ import (
 )
 
 type Error struct {
-	code   int      `json:"code"`
-	msg    string   `json:"msg"`
-	detail []string `json:"detail"`
+	Code   int      `json:"Code"`
+	Msg    string   `json:"Msg"`
+	Detail []string `json:"Detail"`
 }
 
-var codes = map[int]string{} //errCode : msg
+var codes = map[int]string{} //errCode : Msg
 func NewError(code int, msg string) *Error {
 	//if exist ,panic
 	if _, ok := codes[code]; ok {
 		//found
-		panic(fmt.Sprintf("Error code %d is already exist", code))
+		panic(fmt.Sprintf("Error Code %d is already exist", code))
 	}
 
 	codes[code] = msg
 	return &Error{
-		code: code,
-		msg:  msg,
+		Code: code,
+		Msg:  msg,
 	}
 }
 
@@ -31,25 +31,25 @@ func (err *Error) Error() string {
 	return fmt.Sprintf("")
 }
 
-func (err *Error) Code() int {
-	return err.code
+func (err *Error) GetCode() int {
+	return err.Code
 }
 
-func (err *Error) Msg() string {
-	return err.msg
+func (err *Error) GetMsg() string {
+	return err.Msg
 }
 
-func (err *Error) Detail() []string {
-	return err.detail
+func (err *Error) GetDetail() []string {
+	return err.Detail
 }
 
 func (err *Error) WithDetail(detail ...string) *Error {
 	newErr := *err
-	newErr.detail = []string{}
+	newErr.Detail = []string{}
 
-	//append passing detail to error detail
+	//append passing Detail to error Detail
 	for _, data := range detail {
-		newErr.detail = append(newErr.detail, data)
+		newErr.Detail = append(newErr.Detail, data)
 	}
 
 	return &newErr
@@ -57,24 +57,24 @@ func (err *Error) WithDetail(detail ...string) *Error {
 
 func (err *Error) StatusCode() int {
 
-	switch err.Code() {
-	case Success.Code():
+	switch err.GetCode() {
+	case Success.GetCode():
 		return http.StatusOK
-	case PermanentlyRedirect.Code():
+	case PermanentlyRedirect.GetCode():
 		return http.StatusMovedPermanently
-	case ServerError.Code():
+	case ServerError.GetCode():
 		return http.StatusInternalServerError
-	case InvalidParams.Code():
+	case InvalidParams.GetCode():
 		return http.StatusBadRequest
-	case TooManyRequest.Code():
+	case TooManyRequest.GetCode():
 		return http.StatusTooManyRequests
-	case NotFound.Code():
+	case NotFound.GetCode():
 		return http.StatusNotFound
-	case ErrorCreateShortenURL.Code():
+	case ErrorCreateShortenURL.GetCode():
 		return http.StatusInternalServerError
-	case ErrorGetURL.Code():
+	case ErrorGetURL.GetCode():
 		fallthrough
-	case ErrorUrlCodeExpired.Code():
+	case ErrorUrlCodeExpired.GetCode():
 		break
 	}
 

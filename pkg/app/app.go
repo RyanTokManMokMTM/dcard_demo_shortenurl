@@ -19,11 +19,11 @@ func NewResponse(ctx *gin.Context) *Response {
 func (res *Response) ErrorResponse(err *errCode.Error) {
 	//response message
 	data := gin.H{
-		"code": err.Code(),
-		"msg":  err.Msg(),
+		"code": err.GetCode(),
+		"msg":  err.GetMsg(),
 	}
 
-	detail := err.Detail()
+	detail := err.GetDetail()
 	if len(detail) > 0 {
 		data["detail"] = detail
 	}

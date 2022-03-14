@@ -3,6 +3,7 @@ Server:
   Port: 8000
   ReadTimeOut: 10
   WriteTimeOut: 10
+  Mode: release
 
 Database:
   User: root

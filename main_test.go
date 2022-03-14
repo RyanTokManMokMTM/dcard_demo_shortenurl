@@ -27,7 +27,7 @@ func httpPerformance(r http.Handler, method, path string, body io.Reader) *httpt
 //	engine := setUpServer()
 //
 //	res := httpPerformance(engine, "GET", "/")
-//	if res.Code != http.StatusOK {
+//	if res.GetCode != http.StatusOK {
 //		t.Error("response error")
 //	}
 //

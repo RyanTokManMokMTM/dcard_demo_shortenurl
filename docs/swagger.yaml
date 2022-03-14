@@ -1,0 +1,88 @@
+basePath: /api/v1
+definitions:
+  errCode.Error:
+    properties:
+      Code:
+        type: integer
+      Detail:
+        items:
+          type: string
+        type: array
+      Msg:
+        type: string
+    type: object
+  service.ShortenURLInfo:
+    properties:
+      id:
+        type: string
+      shortUrl:
+        type: string
+    type: object
+host: 127.0.0.1:8080
+info:
+  contact:
+    email: RyanTokManMokMTM@hotmail.com
+    name: jackson.tmm
+    url: https://github.com/RyanTokManMokMTM
+  description: dcard shortener url apis
+  title: dcard short url demo
+  version: "1.0"
+paths:
+  /{url_id}:
+    get:
+      parameters:
+      - description: short url id
+        in: path
+        name: url_id
+        required: true
+        type: string
+      produces:
+      - text/html
+      responses:
+        "301":
+          description: redirect to orginal url
+          schema:
+            type: string
+        "404":
+          description: url id expired/not existed
+          schema:
+            type: obejct
+      summary: Redirect to original url by url id
+      tags:
+      - RedirectURL
+  /api/v1/urls:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - description: original url
+        in: formData
+        name: URL
+        required: true
+        type: string
+      - description: UTC time
+        in: formData
+        name: ExpiredTime
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: upload succeed
+          schema:
+            $ref: '#/definitions/service.ShortenURLInfo'
+        "400":
+          description: request parameter invaild
+          schema:
+            $ref: '#/definitions/errCode.Error'
+        "500":
+          description: upload failed
+          schema:
+            $ref: '#/definitions/errCode.Error'
+      summary: Upload longest url with expired time
+      tags:
+      - UploadURL
+schemes:
+- http
+swagger: "2.0"

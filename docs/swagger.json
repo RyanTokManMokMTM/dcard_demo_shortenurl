@@ -1,0 +1,134 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "dcard shortener url apis",
+        "title": "dcard short url demo",
+        "contact": {
+            "name": "jackson.tmm",
+            "url": "https://github.com/RyanTokManMokMTM",
+            "email": "RyanTokManMokMTM@hotmail.com"
+        },
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/api/v1/urls": {
+            "post": {
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UploadURL"
+                ],
+                "summary": "Upload longest url with expired time",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "original url",
+                        "name": "URL",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "UTC time",
+                        "name": "ExpiredTime",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "upload succeed",
+                        "schema": {
+                            "$ref": "#/definitions/service.ShortenURLInfo"
+                        }
+                    },
+                    "400": {
+                        "description": "request parameter invaild",
+                        "schema": {
+                            "$ref": "#/definitions/errCode.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "upload failed",
+                        "schema": {
+                            "$ref": "#/definitions/errCode.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/{url_id}": {
+            "get": {
+                "produces": [
+                    "text/html"
+                ],
+                "tags": [
+                    "RedirectURL"
+                ],
+                "summary": "Redirect to original url by url id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "short url id",
+                        "name": "url_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "301": {
+                        "description": "redirect to orginal url",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "url id expired/not existed",
+                        "schema": {
+                            "type": "obejct"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "errCode.Error": {
+            "type": "object",
+            "properties": {
+                "Code": {
+                    "type": "integer"
+                },
+                "Detail": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "Msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.ShortenURLInfo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "shortUrl": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

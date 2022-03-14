@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	_ "github.com/RyanTokManMokMTM/dcard_demo_shortenurl/docs"
 	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/global"
 	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/internal/model"
 	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/internal/router"
@@ -20,8 +21,18 @@ func init() {
 	if err := setUpDatabase(); err != nil {
 		log.Fatalln(err)
 	}
+
 }
 
+// @title dcard short url demo
+// @version 1.0
+// @description dcard shortener url apis
+// @contact.name jackson.tmm
+// @contact.url https://github.com/RyanTokManMokMTM
+// @contact.email RyanTokManMokMTM@hotmail.com
+// @host 127.0.0.1:8080
+// @BasePath /api/v1
+// @schemes http
 func main() {
 	//Create a http server
 	server := http.Server{
@@ -37,7 +48,9 @@ func main() {
 }
 
 func setUpServer() *gin.Engine {
+	//gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()
+
 	router.NewRouter(engine)
 	return engine
 }

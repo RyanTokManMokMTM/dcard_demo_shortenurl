@@ -18,6 +18,15 @@ GetUrlAndRedirect -TODO
 - Response
 	redirect
 */
+
+// @Summary Redirect to original url by url id
+// @Tags RedirectURL
+// @Version 1.0
+// @Produce text/html
+// @Param url_id path string required "short url id"
+// @Success 301 string string "redirect to orginal url"
+// @Failure 404 {obejct} errCode.Error "url id expired/not existed"
+// @Router /{url_id} [GET]
 func GetUrlAndRedirect(ctx *gin.Context) {
 	res := app.NewResponse(ctx)
 	id := ctx.Param("url_id")
