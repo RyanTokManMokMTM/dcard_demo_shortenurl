@@ -1,6 +1,8 @@
 package service
 
 import (
+	"fmt"
+	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/global"
 	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/pkg/util"
 	"time"
 )
@@ -13,9 +15,8 @@ type UrlUploadReq struct {
 }
 
 type ShortenURLInfo struct {
-	ShortenURL string
-	LongestURL string
-	ExpiredAt  time.Time
+	Id       string
+	ShortUrl string
 }
 
 func (serve *Service) CreateShortenUrl(param *UrlUploadReq) (*ShortenURLInfo, error) {
@@ -36,8 +37,7 @@ func (serve *Service) CreateShortenUrl(param *UrlUploadReq) (*ShortenURLInfo, er
 	}
 
 	return &ShortenURLInfo{
-		ShortenURL: shortenStr,
-		LongestURL: model.OriginalURL,
-		ExpiredAt:  model.ExpiredAt,
+		Id:       shortenStr,
+		ShortUrl: fmt.Sprintf("http://%s:%s/%s", global.ServerSetting.Host, global.ServerSetting.Port, shortenStr),
 	}, err
 }

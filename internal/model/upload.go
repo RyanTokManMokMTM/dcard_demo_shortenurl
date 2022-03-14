@@ -3,7 +3,6 @@ package model
 import (
 	"errors"
 	"gorm.io/gorm"
-	"log"
 	"time"
 )
 
@@ -26,7 +25,7 @@ func (up UploadModel) CreateShortenURL(db *gorm.DB) (*UploadModel, error) {
 	//if the record is existed and expired,just updated the expired date and return the
 	var exist int64
 	db.Model(&up).Select("count(*)").Where("original_url = ?", up.OriginalURL).Find(&exist)
-	log.Println(exist)
+
 	if exist > 0 {
 		return nil, errors.New("original_url is already exist")
 	}
@@ -44,6 +43,7 @@ func (up UploadModel) UpdateShortenURL(db *gorm.DB, v interface{}) error {
 
 func (up UploadModel) GetShortenURLInfo(db *gorm.DB) (*UploadModel, error) {
 	if err := db.Model(&up).Where("shorten_url = ?", up.ShortenURL).First(&up).Error; err != nil {
+
 		return nil, err
 	}
 

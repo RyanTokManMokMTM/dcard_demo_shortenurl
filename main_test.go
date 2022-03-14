@@ -190,16 +190,47 @@ func TestGetUrl(t *testing.T) {
 	}{
 		//redirected
 		{
-			UrlCode:        "5HjtN1",
+			//please ensure that this url code is exist before the unit test
+			UrlCode:        "a1CtN1",
 			ExpectedStatus: errCode.PermanentlyRedirect.StatusCode(), //301
 		},
 		{
-			UrlCode:        "6HjtN1",
+			//please ensure that this url code is exist before the unit test
+			UrlCode:        "b5CtN1",
 			ExpectedStatus: errCode.PermanentlyRedirect.StatusCode(), //301
 		},
 		{
-			UrlCode:        "7HjtN1",
+			//please ensure that this url code is exist before the unit test
+			UrlCode:        "C8CtN1",
 			ExpectedStatus: errCode.PermanentlyRedirect.StatusCode(), //301
+		},
+
+		//not found
+		{
+			UrlCode:        "x45FW451s",
+			ExpectedStatus: errCode.NotFound.StatusCode(), //404
+		},
+		{
+			UrlCode:        "w454s1x",
+			ExpectedStatus: errCode.NotFound.StatusCode(), //404
+		},
+		{
+			UrlCode:        "aw4452551gdk",
+			ExpectedStatus: errCode.NotFound.StatusCode(), //404
+		},
+
+		//code expired
+		{
+			UrlCode:        "x8C5G7",
+			ExpectedStatus: errCode.NotFound.StatusCode(), //404
+		},
+		{
+			UrlCode:        "x12C5G7",
+			ExpectedStatus: errCode.NotFound.StatusCode(), //404
+		},
+		{
+			UrlCode:        "C1CtN1",
+			ExpectedStatus: errCode.NotFound.StatusCode(), //404
 		},
 	}
 
