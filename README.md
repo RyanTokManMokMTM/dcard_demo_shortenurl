@@ -21,7 +21,7 @@ http://127.0.0.1:8000/swagger/index.html
 
 ### How it work
 #### Upload url
-* Getting uploaded datas from the HTTP Form and validate the data via Validator including URL and time
+* Getting uploaded data from the HTTP Form and validating  the data via Validator including URL and time
 * Create a new tuple/record to the DB with Form data if data is validated successfully
 * After tuple is created, server'll use **base62 Algorithm** to generate the short_URL depending on Unix time
   * base62 Algorithm Implementation
