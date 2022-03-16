@@ -25,5 +25,8 @@ type (
 
 	App struct {
 		NotAllowedAccessTime time.Duration
+		LimiterBucketSize    int
+		LimiterTokenTime     time.Duration
+		LimterClearTime      time.Duration
 	}
 )

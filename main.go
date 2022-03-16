@@ -6,6 +6,7 @@ import (
 	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/global"
 	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/internal/model"
 	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/internal/router"
+	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/pkg/limiter"
 	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/pkg/setting"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -22,6 +23,7 @@ func init() {
 		log.Fatalln(err)
 	}
 
+	setUpLimiter()
 }
 
 // @title dcard short url demo
@@ -76,6 +78,8 @@ func setUpSetting() error {
 	}
 
 	global.AppSetting.NotAllowedAccessTime *= time.Second
+	global.AppSetting.LimiterTokenTime *= time.Second
+	global.AppSetting.LimterClearTime *= time.Second
 	global.ServerSetting.ReadTimeOut *= time.Second
 	global.ServerSetting.WriteTimeOut *= time.Second
 	return nil
@@ -90,4 +94,8 @@ func setUpDatabase() error {
 		return err
 	}
 	return nil
+}
+
+func setUpLimiter() {
+	global.Limiters = limiter.NewLimitersCollection()
 }

@@ -68,6 +68,8 @@ func (err *Error) StatusCode() int {
 		return http.StatusBadRequest
 	case TooManyRequest.GetCode():
 		return http.StatusTooManyRequests
+	case ClientError.GetCode():
+		return http.StatusNotAcceptable
 	case NotFound.GetCode():
 		return http.StatusNotFound
 	case ErrorCreateShortenURL.GetCode():

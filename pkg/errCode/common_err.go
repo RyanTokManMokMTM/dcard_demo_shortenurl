@@ -8,6 +8,7 @@ var (
 	InvalidParams       = NewError(10001, "invalid params")
 	NotFound            = NewError(10002, "not found")
 	TooManyRequest      = NewError(10003, "too many request")
+	ClientError         = NewError(10004, "client issues")
 )
 
 //Shorten URL error Code prefix starting with 2000x

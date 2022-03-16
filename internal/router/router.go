@@ -11,6 +11,7 @@ import (
 //NewRouter all router define here
 func NewRouter(engine *gin.Engine) {
 
+	engine.Use(middleware.RateLimiter())
 	engine.Use(middleware.ValidateTranslator())
 
 	apiV1 := engine.Group("/api/v1")
