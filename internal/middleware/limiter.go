@@ -23,10 +23,12 @@ func RateLimiter() gin.HandlerFunc {
 			res.ErrorResponse(errCode.ClientError.WithDetail("Client agent info not found or error"))
 			ctx.Abort()
 		}
-
+		//log.Println(clientIP)
+		//limiter : 10 request for each user and a token will generate after 1s
 		l := newLimiters(
+			//1s to generate a token
 			rate.Every(global.AppSetting.LimiterTokenTime),
-			global.AppSetting.LimiterBucketSize,
+			global.AppSetting.LimiterBucketSize, //there are total 10 buckets
 			clientIP)
 
 		if !l.Allow() {
