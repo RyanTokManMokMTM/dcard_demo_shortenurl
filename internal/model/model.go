@@ -28,7 +28,7 @@ func NewEngine(dbSetting *setting.DB) (*gorm.DB, error) {
 		dbSetting.ParseTime,
 	)
 
-	db, err := gorm.Open(mysql.Open(set), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(set))
 	if err != nil {
 		return nil, err
 	}

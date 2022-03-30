@@ -15,7 +15,7 @@ type Limiters struct {
 type Limiter struct {
 	limiter    *rate.Limiter
 	lastAccess time.Time
-	key        string
+	//key        string
 }
 
 func NewLimitersCollection() *Limiters {
@@ -41,7 +41,7 @@ func (ls *Limiters) GetLimiter(r rate.Limit, b int, key string) *Limiter {
 	newLimiter := &Limiter{
 		limiter:    rate.NewLimiter(r, b),
 		lastAccess: time.Now(),
-		key:        key,
+		//key:        key,
 	}
 
 	ls.Limiters[key] = newLimiter

@@ -9,9 +9,9 @@ import (
 
 type UrlUploadReq struct {
 	//URL
-	URL string `form:"URL" binding:"required,url"`
+	URL string `form:"url" json:"url" binding:"required,url"`
 	//Expired time
-	ExpiredTime time.Time `form:"ExpiredTime" binding:"required,gt"`
+	ExpiredTime time.Time `form:"ExpiredTime" json:"ExpiredTime" binding:"required,gt"`
 }
 
 type ShortenURLInfo struct {

@@ -19,5 +19,5 @@ Database:
 App:
   NotAllowedAccessTime: 60 # in second
   LimiterBucketSize: 10
-  LimiterTokenTime: 1 # in second
+  LimiterTokenTime: 200 # in ms
   LimterClearTime: 60 # in second

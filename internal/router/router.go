@@ -3,6 +3,7 @@ package router
 import (
 	v1 "github.com/RyanTokManMokMTM/dcard_demo_shortenurl/internal/api/v1"
 	"github.com/RyanTokManMokMTM/dcard_demo_shortenurl/internal/middleware"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	swaggerFile "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -11,7 +12,17 @@ import (
 
 //NewRouter all router define here
 func NewRouter(engine *gin.Engine) {
-
+	engine.Use(cors.New(cors.Config{
+		AllowAllOrigins:  true,
+		AllowMethods:     []string{"PUT", "PATCH", "POST", "GET"},
+		AllowHeaders:     []string{"Origin", "Accept", "Content-Type"},
+		AllowCredentials: true,
+	}))
+	engine.GET("/", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, gin.H{
+			"Msg": "Hello axis",
+		})
+	})
 	engine.Use(middleware.RateLimiter())
 	engine.Use(middleware.ValidateTranslator())
 

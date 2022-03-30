@@ -27,7 +27,7 @@ func (up UploadModel) CreateShortenURL(db *gorm.DB) (*UploadModel, error) {
 	db.Model(&up).Select("count(*)").Where("original_url = ?", up.OriginalURL).Find(&exist)
 
 	if exist > 0 {
-		return nil, errors.New("original_url is already exist")
+		return nil, errors.New("original_url already exists")
 	}
 
 	if err := db.Create(&up).Error; err != nil {
