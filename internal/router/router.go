@@ -18,9 +18,9 @@ func NewRouter(engine *gin.Engine) {
 		AllowHeaders:     []string{"Origin", "Accept", "Content-Type"},
 		AllowCredentials: true,
 	}))
-	engine.GET("/", func(ctx *gin.Context) {
+	engine.GET("/ping", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
-			"Msg": "Hello",
+			"Msg": "pong",
 		})
 	})
 	engine.Use(middleware.RateLimiter())
