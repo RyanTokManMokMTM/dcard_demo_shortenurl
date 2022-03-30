@@ -20,18 +20,18 @@ func NewRouter(engine *gin.Engine) {
 	}))
 	engine.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
-			"Msg": "Hello axis",
+			"Msg": "Hello",
 		})
 	})
 	engine.Use(middleware.RateLimiter())
 	engine.Use(middleware.ValidateTranslator())
 
 	apiV1 := engine.Group("/api/v1")
-	apiV1.GET("/limiter", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "succeed",
-		})
-	})
+	//apiV1.GET("/limiter", func(ctx *gin.Context) {
+	//	ctx.JSON(http.StatusOK, gin.H{
+	//		"message": "succeed",
+	//	})
+	//})
 	apiV1.POST("/urls", v1.UploadController)
 	engine.GET("/:url_id", v1.GetUrlAndRedirect)
 	if gin.Mode() == gin.DebugMode {

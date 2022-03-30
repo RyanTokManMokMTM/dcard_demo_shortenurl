@@ -50,7 +50,7 @@ func main() {
 }
 
 func setUpServer() *gin.Engine {
-	//gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(global.ServerSetting.Mode)
 	engine := gin.New()
 
 	router.NewRouter(engine)
