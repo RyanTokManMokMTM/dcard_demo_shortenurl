@@ -46,13 +46,12 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	log.Fatal(server.ListenAndServe())
+	log.Fatal(server.ListenAndServeTLS("internal/ssl/server.crt", "internal/ssl/server.key"))
 }
 
 func setUpServer() *gin.Engine {
-	gin.SetMode(global.ServerSetting.Mode)
+	//gin.SetMode(global.ServerSetting.Mode)
 	engine := gin.New()
-
 	router.NewRouter(engine)
 	return engine
 }

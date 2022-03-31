@@ -1,9 +1,9 @@
 Server:
   Host: localhost
-  Port: 8080
+  Port: 443
   ReadTimeOut: 10
   WriteTimeOut: 10
-  Mode: release
+  Mode: debug
 
 Database:
   User: root
