@@ -1,7 +1,6 @@
 # Dcard Demo
-
 ### Simple Live Demo
-
+![Demo](https://upload.cc/i1/2022/03/31/c5VgQY.png)
 #### Front-end
 
 I've deployed a simple shorten-URL Demo that developed by React. If You wanna demo,visit the link below:
