@@ -1,17 +1,50 @@
 # Dcard Demo
-Allowing to access local open apis if server is in **debug mode**
-```yaml
-Mode: debug
+
+### Simple Live Demo
+
+#### Front-end
+
+I've deployed a simple shorten-URL Demo that developed by React. If You wanna demo,visit the link below:
+
+```url
+https://shortener-url.herokuapp.com/
 ```
+
+
+
+#### Backend
+
+**My backend API Server have been deployed on AWS EC2 and the host name:**
+
 ```
-http://127.0.0.1:8000/swagger/index.html
+https://ec2-18-141-10-193.ap-southeast-1.compute.amazonaws.com
 ```
+
+**Using this API to check server active state. If it's being active,you'll receive a `pong` message**
+
+```
+https://ec2-18-141-10-193.ap-southeast-1.compute.amazonaws.com/ping
+```
+
 ### Tool in use
+
 * Gin-Gonic(backend framework)
 * Mysql database with GORM
 * Validator v10 
 * Viper
 * Swagger-API
+
+#### APIs Document
+
+Allowing to access Swagger-API if server is in **debug mode**
+
+```yaml
+Mode: debug
+```
+
+```
+{HOST}/swagger/index.html
+```
 
 ### APIs
 |Uri|Method|Desc|
