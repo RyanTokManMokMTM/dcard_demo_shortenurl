@@ -38,6 +38,7 @@ func (serve *Service) CreateShortenUrl(param *UrlUploadReq) (*ShortenURLInfo, er
 
 	return &ShortenURLInfo{
 		Id:       shortenStr,
-		ShortUrl: fmt.Sprintf("http://%s:%s/%s", global.ServerSetting.Host, global.ServerSetting.Port, shortenStr),
+		ShortUrl: fmt.Sprintf("https://%s/%s", global.ServerSetting.Host, shortenStr),
+		//ShortUrl: fmt.Sprintf("http://%s:%s/%s", global.ServerSetting.Host, global.ServerSetting.Port, shortenStr),
 	}, err
 }
