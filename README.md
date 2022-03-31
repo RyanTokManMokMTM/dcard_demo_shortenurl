@@ -14,7 +14,7 @@ https://shortener-url.herokuapp.com/
 
 #### Backend
 
-**My backend API Server have been deployed on AWS EC2 and the host name:**
+**API Server have been deployed on AWS EC2 and the host name:**
 
 ```
 https://ec2-18-141-10-193.ap-southeast-1.compute.amazonaws.com
@@ -29,7 +29,8 @@ https://ec2-18-141-10-193.ap-southeast-1.compute.amazonaws.com/ping
 ### Tool in use
 
 * Gin-Gonic(backend framework)
-* Mysql database with GORM
+* Mysql database 
+* GROM
 * Validator v10 
 * Viper
 * Swagger-API
