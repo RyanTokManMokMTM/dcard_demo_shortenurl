@@ -3,7 +3,7 @@
 ![Demo](https://upload.cc/i1/2022/03/31/c5VgQY.png)
 #### Front-end
 
-I've deployed a simple shorten-URL Demo that developed by React. If You wanna demo,visit the link below:
+I've deployed a simple shorten-URL Demo that have developed by React. If You wanna demo,visit the link below(a bit slow~):
 
 ```url
 https://shortener-url.herokuapp.com/
@@ -91,119 +91,4 @@ Mode: debug
   * Step 2 :whether the url_id expire
     * 1.the URL_id expired, return *404 Not Found* Immediately
     * 2.the URL_id does not expire, redirect to the original_URL
-
----
-
-#### Rate Limiter Implementation
-
-**Limiter manager**
-
-```go
-type Limiters struct {
-	Limiters map[string]*Limiter //All available limiter by client id
-	Lock     sync.Mutex //avoid race condtion when RW limiter list
-}
-```
-
-**Limiter**
-
-```go
-type Limiter struct {
-	limiter    *rate.Limiter //rate limiter for this key
-	lastAccess time.Time //is used to remove user depend on this accessing time
-	key        string //Client ip as key
-}
-```
-
-**Limiter Functionality**
-
-```go
-//Is current user limiter is full
-func (l *Limiter) Allow() bool {
-	access := time.Now()
-	l.lastAccess = access
-	return l.limiter.Allow() //if it's not allowed,it'll return false and server'll return error message
-}
-```
-
-**Limiter Getter/Creator**
-
-```go
-//TODO - Get limiter by key if it already exist.Otherwise,create a new one by client ip
-func (ls *Limiters) GetLimiter(r rate.Limit, b int, key string) *Limiter {
-   ls.Lock.Lock()
-   defer ls.Lock.Unlock()
-   if limiter, ok := ls.Limiters[key]; ok {
-      //limiter not exists
-      return limiter
-   }
-
-   newLimiter := &Limiter{
-      limiter:    rate.NewLimiter(r, b),
-      lastAccess: time.Now(),
-      key:        key,
-   }
-
-   ls.Limiters[key] = newLimiter
-   return newLimiter
-}
-```
-
-```go
-//TODO - is used to remove the user that is no longer accessing the server
-//Up to 1 minute
-func (ls *Limiters) ClearNotUseLimiter(sec time.Duration) {
-	for {
-		time.Sleep(sec) //for now just set 1-minutes for testing
-		//for all limiter
-		for key, l := range ls.Limiters {
-			if time.Now().Sub(l.lastAccess) > sec {
-				ls.Lock.Lock()
-				delete(ls.Limiters, key)
-				log.Printf("limiter for ip:%v is removed", key)
-				ls.Lock.Unlock()
-			}
-		}
-	}
-}
-```
-
-**Register a middleware**
-
-```go
-//TODO - Getting limiter by the client and whether the user allows visiting the server
-func RateLimiter() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		clientIP := ctx.ClientIP()
-		res := app.NewResponse(ctx)
-		if clientIP == "" {
-			res.ErrorResponse(errCode.ClientError.WithDetail("Client agent info not found or error"))
-			ctx.Abort()
-		}
-
-		l := newLimiters(
-			rate.Every(global.AppSetting.LimiterTokenTime),
-			global.AppSetting.LimiterBucketSize,
-			clientIP)
-
-		if !l.Allow() {
-			res.ErrorResponse(errCode.TooManyRequest)
-			ctx.Abort()
-		}
-		ctx.Next()
-	}
-}
-```
-
-```go
-func newLimiters(r rate.Limit, b int, key string) *limiter.Limiter {
-    //for each new limiter,it will run once for removing user from the list
-	onceTask.Do(func() { 
-		log.Println("run once")
-		go global.Limiters.ClearNotUseLimiter(global.AppSetting.LimterClearTime)
-	})
-	return global.Limiters.GetLimiter(r, b, key)
-}
-
-```
 
